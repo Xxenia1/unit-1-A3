@@ -32,7 +32,7 @@ function addColumns(cityPop){
     			citySize = 'Small';
 
     		} else if (cityPop[i-1].population < 500000){
-    			citysize = 'Medium';
+    			citySize = 'Medium';
 
     		} else {
     			citySize = 'Large';
@@ -62,8 +62,8 @@ function addEvents(){
 				color += ")";
 		};
 
-		document.querySelector("table").color = color;
-	});
+		document.querySelector("table").style.color = color;
+	}});
 
 	function clickme(){
 
@@ -72,3 +72,4 @@ function addEvents(){
 
 	document.querySelector("table").addEventListener("click", clickme)
 };
+

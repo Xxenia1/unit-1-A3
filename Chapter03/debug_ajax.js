@@ -1,17 +1,26 @@
 function debugCallback(response){
-	document.querySelector("#mydiv").insertAdjacentHTML('beforeend', 'GeoJSON data: ' + JSON.stringify(myData))
-};
+    // Since 'response' is an object containing the response, you should convert it to JSON first
+    response.json().then(data => {
+        document.querySelector("#mydiv").insertAdjacentHTML('beforeend', '<br>GeoJSON data:<br>' + JSON.stringify(data));
+    });
+}
 
 function debugAjax(){
-	
-	var myData;
-	
-	fetch("data/MegaCities.geojson")
-		.then(function(response){
-			debugCallback(response);
-		})
+    // Fetch the GeoJSON data
+    fetch("data/MegaCities.geojson")
+        .then(response => {
+            if (response.ok) {
+                debugCallback(response);
+            } else {
+                console.log('Network response was not ok.');
+            }
+        })
+        .catch(error => {
+            console.log('There has been a problem with your fetch operation: ', error.message);
+        });
+}
 
-	document.querySelector("#mydiv").insertAdjacentHTML('beforeend' '<br>GeoJSON data:<br>' + JSON.stringify(myData))
-};
-
-document.querySelector("#mydiv").insertAdjacentHTML('beforeend', 'GeoJSON data: ' + JSON.stringify(myData))
+// Wait for the DOM to load before running the script
+document.addEventListener('DOMContentLoaded', function(){
+    debugAjax();
+});

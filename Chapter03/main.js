@@ -1,3 +1,4 @@
+/* Mainsheet by Xun Gong, 2024 */
 // Initialize function called when the script loads
 function initialize(){
 	cities();	
@@ -21,11 +22,11 @@ function initialize(){
 	var rowHtml = "<tr><td>" + cityPop[i].city + "</td><td>" + cityPop[i].population + "</td></tr>";
 	table.insertAdjacentHTML('beforeend', rowHtml);
 	 }
-	// Append the table to "myDiv"
+	// Append the table to "mydiv"
 	document.querySelector("#myDiv").appendChild(table);
 	// Add a new column for city size
 	addColumns(cityPop);
-	// Style changes for "myDiv"
+	// Style changes for "mydiv"
 	var myDiv = document.querySelector('#myDiv');
 	myDiv.style.color = 'blue';
 	myDiv.style.fontSize = '2em';
@@ -60,5 +61,36 @@ function initialize(){
 	alert('Hey, you clicked me!');
 	 });
 	}
-	// Add event listener for DOMContentLoaded
-	document.addEventListener('DOMContentLoaded', initialize);	
+    document.addEventListener('DOMContentLoaded', initialize);
+
+function jsAjax() {
+    // Step 1: Create the data request 
+    // Define the Request
+    var request = new Request('MegaCities.geojson');
+
+    // Step 2: define Fetch parameters 
+    var init = {
+        method: 'GET'
+    };
+
+    // Step 3: use Fetch to retrieve the data
+    fetch(request, init)
+    .then(conversion) // Step 4 convert data to usable form
+    .then(callback) // Step 5 Send retrieved data to a callback function
+}
+// Define conversion callback function
+function conversion(response) {
+    console.log(response) //tasks using the data go here
+    // Convert data to usable form
+    return response.json();
+}
+
+// Define callback function
+function callback(data) {
+    // Insert data into the HTML
+    document.querySelector("#mydiv").insertAdjacentHTML('beforeend', '<br>GeoJSON data:</br>' + JSON.stringify(data));
+    // Tasks using the data go here
+    console.log(data);
+} 
+// Assign jsAjax to window.onload to be called when the window loads
+window.onload = jsAjax;
